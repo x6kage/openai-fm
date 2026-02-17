@@ -75,6 +75,7 @@ export default function DownloadButton() {
       input,
       prompt,
       voice,
+      language,
       latestAudioUrl: storeUrl,
     } = appStore.getState();
 
@@ -89,6 +90,7 @@ export default function DownloadButton() {
       form.append("input", input);
       form.append("prompt", prompt);
       form.append("voice", voice);
+      form.append("language", language);
       form.append("generation", crypto.randomUUID());
       form.append("vibe", vibe);
 

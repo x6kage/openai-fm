@@ -12,6 +12,7 @@ interface BlockProps {
   tabs?: Tab[];
   value?: string;
   onChange?: (nextTab: string) => void;
+  className?: string;
   children: React.ReactNode;
 }
 
@@ -24,10 +25,13 @@ export const Block: React.FC<BlockProps> = ({
   tabs,
   value,
   onChange,
+  className,
   children,
 }) => {
   return (
-    <div className="flex flex-1 flex-col shrink-0 mb-10">
+    <div
+      className={clsx("flex flex-1 flex-col shrink-0 mb-10", className)}
+    >
       <div className="flex flex-row justify-between -mb-[1px] relative items-center gap-2">
         <div className="flex uppercase py-1 text-current/70">{title}</div>
         <div className="flex flex-1 h-[1px] bg-foreground/8" />
@@ -54,9 +58,10 @@ export const Block: React.FC<BlockProps> = ({
         )}
       </div>
       <div
-        className={`flex flex-1 flex-col pt-3 ${
+        className={clsx(
+          "flex flex-1 flex-col min-h-0 pt-3",
           tabs && tabs.length > 0 ? "rounded-bl-md rounded-br-md" : "rounded-md"
-        }`}
+        )}
       >
         {/* If tabs are provided, render only the child matching the selected id.
             Otherwise, render all children. */}

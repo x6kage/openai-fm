@@ -6,6 +6,17 @@ export const MAX_PROMPT_LENGTH = 1000;
 // GET handler that proxies requests to the OpenAI TTS API and streams
 // the response back to the client.
 import { VOICES } from "@/lib/library";
+const LANGUAGE_INSTRUCTIONS: Record<string, string> = {
+  ja: "Speak in Japanese.",
+  en: "Speak in English.",
+};
+
+function buildInstructions(prompt: string, language: string): string {
+  const langInstruction = LANGUAGE_INSTRUCTIONS[language] || "";
+  if (!prompt && !langInstruction) return "";
+  return [langInstruction, prompt].filter(Boolean).join("\n");
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
@@ -16,6 +27,7 @@ export async function GET(req: NextRequest) {
   let input = searchParams.get("input") || "";
   let prompt = searchParams.get("prompt") || "";
   const voice = searchParams.get("voice") || "";
+  const language = searchParams.get("language") || "ja";
   const vibe = searchParams.get("vibe") || "audio";
 
   // Truncate input and prompt to max 1000 characters
@@ -27,6 +39,8 @@ export async function GET(req: NextRequest) {
   if (!VOICES.includes(voice)) {
     return new Response("Invalid voice", { status: 400 });
   }
+
+  const instructions = buildInstructions(prompt, language);
 
   try {
     const apiResponse = await fetch("https://api.openai.com/v1/audio/speech", {
@@ -40,8 +54,7 @@ export async function GET(req: NextRequest) {
         input,
         response_format,
         voice,
-        // Don't pass if empty
-        ...(prompt && { instructions: prompt }),
+        ...(instructions && { instructions }),
       }),
     });
     if (!apiResponse.ok) {
@@ -76,6 +89,7 @@ export async function POST(req: NextRequest) {
   let input = formData.get("input")?.toString() || "";
   let prompt = formData.get("prompt")?.toString() || "";
   const voice = formData.get("voice")?.toString() || "";
+  const language = formData.get("language")?.toString() || "ja";
   const vibe = formData.get("vibe") || "audio";
 
   // Truncate input and prompt to max 1000 characters
@@ -87,6 +101,8 @@ export async function POST(req: NextRequest) {
   if (!VOICES.includes(voice)) {
     return new Response("Invalid voice", { status: 400 });
   }
+
+  const instructions = buildInstructions(prompt, language);
 
   try {
     const apiResponse = await fetch("https://api.openai.com/v1/audio/speech", {
@@ -100,8 +116,7 @@ export async function POST(req: NextRequest) {
         input,
         response_format,
         voice,
-        // Don't pass if empty
-        ...(prompt && { instructions: prompt }),
+        ...(instructions && { instructions }),
       }),
     });
     if (!apiResponse.ok) {

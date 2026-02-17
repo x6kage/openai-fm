@@ -54,7 +54,7 @@ export default function PlayButton() {
       .map(() => Math.random() * 0.06);
 
   const handleSubmit = async () => {
-    const { input, prompt, voice } = appStore.getState();
+    const { input, prompt, voice, language } = appStore.getState();
 
     if (audioLoading) return;
 
@@ -81,6 +81,7 @@ export default function PlayButton() {
       url.searchParams.append("input", input);
       url.searchParams.append("prompt", prompt);
       url.searchParams.append("voice", voice);
+      url.searchParams.append("language", language);
       url.searchParams.append("generation", crypto.randomUUID());
       const audioUrl = url.toString();
       appStore.setState({ latestAudioUrl: audioUrl });

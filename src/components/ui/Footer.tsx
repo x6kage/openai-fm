@@ -3,9 +3,9 @@ import { Docs } from "./Icons";
 import { Button } from "./Button";
 import s from "./Footer.module.css";
 import { CodeCopyButton } from "../CodeCopyButton";
+import { CopySettingsButton } from "../CopySettingsButton";
 import PlayButton from "../PlayButton";
 import DownloadButton from "../DownloadButton";
-import { ShareButton } from "../ShareButton";
 
 export const FooterWrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -22,7 +22,7 @@ export const Footer = ({ devMode }: { devMode: boolean }) => {
     <FooterWrapper>
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
         {devMode ? <DocsLink /> : <DownloadButton />}
-        {devMode ? <CodeCopyButton /> : <ShareButton />}
+        {devMode ? <CodeCopyButton /> : <CopySettingsButton />}
         <div className="flex col-span-1 sm:col-span-2">
           <PlayButton />
         </div>

@@ -70,7 +70,7 @@ export const DevMode: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 flex flex-col gap-3 w-full max-w-(--page-max-width) mx-auto">
+    <div className="flex flex-col gap-3 w-full mt-3">
       <Block
         value={codeView}
         onChange={(nextCodeView) => {
@@ -111,6 +111,6 @@ export const DevMode: React.FC = () => {
           />
         </div>
       </Block>
-    </main>
+    </div>
   );
 };

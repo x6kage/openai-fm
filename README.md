@@ -4,87 +4,77 @@
 ![NextJS](https://img.shields.io/badge/Built_with-NextJS-blue)
 ![OpenAI API](https://img.shields.io/badge/Powered_by-OpenAI_API-orange)
 
-[OpenAI.fm](https://openai.fm) is an interactive demo to showcase the new OpenAI text-to-speech models.
-It is built with NextJS and the [Speech API](https://platform.openai.com/docs/api-reference/audio/createSpeech).
+A TTS demo app (PoC) based on [OpenAI.fm](https://openai.fm). Try Voice / Vibe / Script and copy your preferred settings with one click. Access is protected by Basic auth.
 
-For more information about text-to-speech using the OpenAI API, check out our [documentation](https://platform.openai.com/docs/guides/text-to-speech).
+## Setup
 
-![screenshot](./public/screenshot.jpg)
+### Prerequisites
 
-## How to run
+- [Bun](https://bun.sh/) installed
+- [OpenAI API key](https://platform.openai.com/api-keys)
 
-1. **Set up the OpenAI API:**
+### 1. Clone the repository
 
-   - If you're new to the OpenAI API, [sign up for an account](https://platform.openai.com/signup).
-   - Follow the [Quickstart](https://platform.openai.com/docs/quickstart) to retrieve your API key.
+```bash
+git clone <your-repo-url>
+cd openai-fm
+```
 
-2. **Clone the Repository:**
+### 2. Environment variables
 
-   ```bash
-   git clone https://github.com/openai/openai-fm.git
-   ```
+Create a `.env` file from `.env.example`:
 
-3. **Set the OpenAI API key:**
+```bash
+cp .env.example .env
+```
 
-   2 options:
+Edit `.env`:
 
-   - Set the `OPENAI_API_KEY` environment variable [globally in your system](https://platform.openai.com/docs/libraries#create-and-export-an-api-key)
-   - Set the `OPENAI_API_KEY` environment variable in the project: Create a `.env` file at the root of the project and add the following line (see `.env.example` for reference):
+```bash
+# Required: OpenAI API key
+OPENAI_API_KEY=sk-...
 
-   ```bash
-   OPENAI_API_KEY=<your_api_key>
-   ```
+# Optional: Basic auth (enabled when both are set)
+BASIC_AUTH_USER=admin
+BASIC_AUTH_PASSWORD=your-password-here
+```
 
-4. **Install dependencies:**
+### 3. Install dependencies
 
-   Run in the project root:
+```bash
+bun install
+```
 
-   ```bash
-   npm install
-   ```
+### 4. Start the dev server
 
-5. **(Optional) Connect to a hosted database:**
+```bash
+bun run dev
+```
 
-   If you want to use the sharing feature, you need to connect to a hosted postgres database.
-   You should set the environment variables in a `.env` file at the root of the project to connect to your database as shown in `.env.example`.
+The app runs at [`http://localhost:3000`](http://localhost:3000).
 
-   ```bash
-   POSTGRES_URL="postgresql://username:password@host:port/database_name"
-   ```
+## Deploy to Vercel
 
-   This step is not needed to run the application and only affects the sharing feature.
+1. Push the repository to GitHub
+2. Import the project on [Vercel](https://vercel.com/new)
+3. Set Environment Variables:
+   - `OPENAI_API_KEY`
+   - `BASIC_AUTH_USER`
+   - `BASIC_AUTH_PASSWORD`
+4. Deploy
 
-6. **Run the app:**
+> [!NOTE]
+> OpenAI API usage on the deployed app is billed to the owner of the API key. Enable Basic auth to prevent unintended access.
 
-   ```bash
-   npm run dev
-   ```
+## Changes from the original
 
-   The app will be available at [`http://localhost:3000`](http://localhost:3000).
-
-> [!NOTE]  
-> Be aware that if you deploy this app to a public server, you are responsible for any usage it may incur using your OpenAI API key.
-
-## Contributors
-
-### OpenAI team
-
-- [Tyler Smith](https://github.com/tylersmith-openai)
-- [Karolis Kosas](https://github.com/karoliskosas)
-- [Justin Jay Wang](https://github.com/justinjaywang)
-- [Bobby Stocker](https://github.com/stocker-openai)
-- [Jeff Harris](https://github.com/jeffsharris)
-- [Romain Huet](https://github.com/romainhuet)
-- [David Weedon](https://github.com/weedon-openai)
-- [Iaroslav Tverdokhlib](https://github.com/itv-openai)
-- [Adam Walker](https://github.com/awalker-openai)
-- [Edwin Arbus](https://x.com/edwinarbus)
-- [Katia Gil Guzman](https://github.com/katia-openai)
-
-### Contributing
-
-You are welcome to open issues or submit PRs to improve this app, however, please note that we may not review all suggestions.
+- Share feature (Postgres) removed
+- “Copy Settings” button added (Voice / Language / Vibe to clipboard)
+- Basic auth middleware added
+- Package manager unified to bun
 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+Based on [openai/openai-fm](https://github.com/openai/openai-fm).
