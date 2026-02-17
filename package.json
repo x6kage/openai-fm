@@ -6,7 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs}": "eslint --fix"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.3",
@@ -36,6 +41,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.2",
+    "husky": "^9",
+    "lint-staged": "^15",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

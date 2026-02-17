@@ -66,6 +66,26 @@ The app runs at [`http://localhost:3000`](http://localhost:3000).
 > [!NOTE]
 > OpenAI API usage on the deployed app is billed to the owner of the API key. Enable Basic auth to prevent unintended access.
 
+## Lint (auto-fix)
+
+### On save (Cursor / VS Code)
+
+The repo includes `.vscode/settings.json` so that **ESLint auto-fix** runs when you save a file. Fixable issues (e.g. quotes, semicolons) are corrected automatically. Rules like `no-unused-vars` are not auto-fixable and must be fixed by hand.
+
+### Pre-commit (husky + lint-staged)
+
+On each commit, **lint-staged** runs `eslint --fix` on staged `.js` / `.jsx` / `.ts` / `.tsx` / `.mjs` files. Fixable problems are corrected; if any error remains, the commit is blocked.
+
+After cloning, run `bun install` once so that the **husky** git hooks are installed (the `prepare` script runs automatically).
+
+### Manual
+
+To fix the whole project:
+
+```bash
+bun run lint:fix
+```
+
 ## Changes from the original
 
 - Share feature (Postgres) removed
